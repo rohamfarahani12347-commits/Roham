@@ -1,386 +1,393 @@
-// scratch/roham-phone/github/site/panel.html
+// scratch/roham-datacenter/src/panel.html
 var panel_default = `<!doctype html>
-<html lang="fa" dir="rtl" data-mode="local">
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#111816">
-<title>ROHAM | اتاق کنترل</title>
+<meta name="theme-color" content="#101c38">
+<title>ROHAM DATA | دیتاسنتر</title>
 <style>
-:root{color-scheme:dark;--bg:#101613;--surface:#17211d;--edge:#293a32;--ink:#eff5ed;--sub:#a5b8ac;--green:#bfe98d;--amber:#f3c473;--error:#ffaaa0;--base:#121b17;font:14px/1.65 Tahoma,"Segoe UI",system-ui,sans-serif}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}button,input{font:inherit}a{color:var(--green)}[hidden]{display:none!important}.shell{max-width:1352px;padding:0 34px 42px;margin:auto}
-header{display:flex;justify-content:space-between;align-items:center;min-height:82px;border-bottom:1px solid var(--edge);gap:12px}.brand{display:flex;align-items:center;gap:13px}.brand-mark{width:37px;height:37px;background:var(--green);color:#1d2a18;border-radius:12px;display:grid;place-items:center;font:900 24px/1 system-ui}.wordmark{font:800 16px/1 system-ui;letter-spacing:.17em}.subtitle{display:block;margin-top:4px;color:var(--sub);font-size:11px}.connection{display:flex;align-items:center;gap:8px;color:var(--sub)}.dot{background:#819288;border-radius:50%;width:7px;height:7px;display:inline-block;flex:none}.dot[data-state=up]{background:var(--green);box-shadow:0 0 10px #bfe98d5a}.dot[data-state=down]{background:var(--error)}
-.hero{display:flex;justify-content:space-between;align-items:end;gap:16px;padding:27px 0 22px}.hero h1{margin:0;font-size:clamp(24px,3.4vw,40px);line-height:1.4}.hero p{margin:5px 0 0;color:var(--sub)}.hero button{white-space:nowrap}.access{padding:16px;margin-bottom:20px;border:1px solid var(--edge);border-radius:12px;background:var(--surface);display:flex;align-items:end;gap:10px;flex-wrap:wrap}.field{flex:1;min-width:185px;max-width:390px}.field label{display:block;margin-bottom:5px;color:var(--sub)}input{width:100%;min-height:40px;border:1px solid #3f5648;border-radius:8px;padding:6px 10px;background:#0f1813;color:var(--ink);direction:ltr}
-.board{display:grid;grid-template-columns:minmax(0,1fr) minmax(268px,315px);gap:18px;align-items:start}.card{background:var(--surface);border:1px solid var(--edge);border-radius:14px;overflow:hidden;min-width:0}.card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 17px;border-bottom:1px solid var(--edge)}h2{font-size:16px;margin:0}.muted{color:var(--sub)}.num{font:500 12px/1.6 ui-monospace,monospace;direction:ltr;unicode-bidi:isolate}.stage{aspect-ratio:16/9;position:relative;display:grid;place-items:center;isolation:isolate;background-color:#0a100d;background-image:linear-gradient(#58766118 1px,transparent 1px),linear-gradient(90deg,#58766118 1px,transparent 1px);background-size:34px 34px;overflow:hidden}.stage:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse,#20302690,transparent 62%);z-index:-1}.stage img{width:100%;height:100%;object-fit:contain;position:absolute;inset:0;background:#090f0c}.empty{text-align:center;color:var(--sub);padding:14px}.empty-icon{display:block;margin:0 auto 14px;width:44px;height:32px;border:1px solid #799486;border-radius:9px;position:relative}.empty-icon:before{content:"";position:absolute;inset:7px 13px;border:1px solid #799486;border-radius:50%}.empty-icon:after{content:"";position:absolute;width:9px;height:3px;border-radius:3px 3px 0 0;top:-4px;right:9px;background:#799486}.empty strong{display:block;color:var(--ink);font-size:15px}.mode{display:flex;align-items:center;gap:8px}.toolbar{padding:12px 16px;display:flex;flex-wrap:wrap;gap:8px}.toolbar button{flex:0 1 auto}.notice{min-height:26px;margin:0 16px 11px;color:var(--sub);overflow-wrap:anywhere}.notice[data-error=true]{color:var(--error)}
-button{min-height:38px;padding:5px 13px;border:1px solid #3b5144;border-radius:8px;background:#202e27;color:var(--ink);cursor:pointer}button:hover:not(:disabled){background:#2c3d33}button:disabled{opacity:.44;cursor:default}button:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:2px}.primary{background:var(--green);font-weight:700;color:#172314;border-color:var(--green)}.primary:hover:not(:disabled){background:#dbfabe}.quiet{background:transparent;color:var(--sub)}.danger{color:var(--error)}
-.node-list{list-style:none;margin:0;padding:0 16px}.node{border-bottom:1px solid var(--edge);padding:12px 0}.node:last-child{border:0}.node-main{display:flex;justify-content:space-between;align-items:center;gap:8px}.node-name{display:flex;align-items:center;gap:8px;font-weight:bold}.node-id{color:var(--sub);font-size:10px}.node-state{font-size:12px;color:var(--sub);white-space:nowrap}.node-state[data-state=up]{color:var(--green)}.node-state[data-state=down]{color:var(--error)}.meter{height:3px;background:#314238;border-radius:9px;margin-top:8px;overflow:hidden}.meter i{display:block;height:100%;width:0;background:var(--green)}.node-meta{display:flex;justify-content:space-between;gap:6px;margin-top:5px;color:var(--sub);font-size:11px}.device-footer{padding:12px 16px;border-top:1px solid var(--edge);display:flex;justify-content:space-between;align-items:center;gap:8px}.device-footer button{min-height:30px;font-size:11px}
-.gallery{margin-top:18px}.gallery .card-head{flex-wrap:wrap}.gallery-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));list-style:none;margin:0;padding:13px 16px;gap:9px}.file{border:1px solid var(--edge);background:var(--base);border-radius:9px;padding:8px;min-width:0;display:flex;gap:6px;align-items:center}.file-main{flex:1;text-align:right;min-width:0;background:transparent;border:0;padding:3px 7px}.file-label{display:block;overflow-wrap:anywhere}.file small{display:block;color:var(--sub);margin-top:2px}.file .danger{border:0;padding-inline:7px;background:transparent;font-size:11px}.gallery-empty{color:var(--sub);padding:14px 17px;margin:0}.gallery-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:0 16px 13px;color:var(--sub)}.gallery-footer button{min-height:31px}
-@media(max-width:880px){.shell{padding-inline:20px}.board{grid-template-columns:minmax(0,1fr) 245px}}@media(max-width:700px){.shell{padding-inline:13px}.board{grid-template-columns:1fr}.hero{padding:20px 0 15px}header{min-height:62px}.stage{aspect-ratio:4/3}.node-list{display:grid;grid-template-columns:1fr 1fr;gap:0 13px}.node:nth-child(3){border:0}.card-head{padding-inline:12px}.toolbar{padding-inline:12px}.gallery-items{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));padding:10px}.device-footer{padding-inline:12px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
-#uploadForm{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 16px 10px}
-#phoneFile{width:min(100%,430px);direction:rtl;min-width:0;flex:1 1 210px}
-#phoneFile::file-selector-button{font:inherit;border:0;border-radius:5px;background:#314638;color:var(--ink);padding:4px 8px;margin-inline-end:9px;cursor:pointer}
-#phoneFiles .file{justify-content:space-between}
-#phoneFiles .upload-name{min-width:0;overflow-wrap:anywhere}
-#phoneFiles a{white-space:nowrap;padding:7px 4px}
-#uploadLimit{font-size:12px;color:var(--sub)}
+:root {
+  color-scheme:light; --bg:#eff3f9; --paper:#fff; --ink:#182441; --muted:#536581;
+  --line:#dce4f0; --navy:#132347; --blue:#304fbc; --sky:#6dd9ec;
+  --green:#14664d; --red:#a22e49; --soft:#f6f8fc;
+  font:14px/1.75 "Noto Sans Arabic",Tahoma,"Segoe UI",Arial,sans-serif;
+}
+* {box-sizing:border-box}
+[hidden] {display:none!important}
+body {margin:0;background:var(--bg);color:var(--ink)}
+button,input {font:inherit}
+button,a,input {touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible,.drop:focus-within {outline:3px solid #648bff;outline-offset:3px}
+button:disabled {opacity:.48;cursor:default}
+.top {background:#101c38;color:#f5f8ff;border-bottom:1px solid #2f426d}
+.bar {max-width:1260px;margin:auto;padding:14px clamp(15px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand {display:flex;align-items:center;gap:10px}
+.mark {background:#72e0ec;color:#101c38;font:900 15px/1 system-ui;display:grid;place-items:center;width:36px;height:36px;border-radius:10px}
+.brandword {font:700 15px/1.45 system-ui;letter-spacing:.12em}
+.top .logout {border-color:#567093;color:#f5f8ff;background:transparent}
+.top .logout:hover:not(:disabled),.top .logout:focus-visible:not(:disabled) {background:#22385e;border-color:#678bc9}
+.shell {max-width:1260px;margin:auto;padding:26px clamp(15px,4vw,48px) 40px}
+.overview {position:relative;isolation:isolate;overflow:hidden;background:#182e5b;border:1px solid #355080;border-radius:18px;padding:26px 24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,.95fr);gap:20px;align-items:end;color:#f8fbff}
+.overview::before {content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 10% 110%,#244fa5 0,transparent 60%),linear-gradient(#84afe52a 1px,transparent 1px),linear-gradient(90deg,#84afe52a 1px,transparent 1px);background-size:auto,28px 28px,28px 28px;opacity:.6;mask-image:linear-gradient(to left,transparent,#000)}
+h1,h2,p {margin:0}
+h1 {font-size:clamp(30px,4vw,52px);line-height:1.45}
+.intro p {color:#d6e3ff;margin-top:3px;font-size:14px}
+.signals {display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}
+.signal {background:#101f43cc;border:1px solid #557aaa94;border-radius:12px;padding:12px}
+.signal dt {color:#c2d4f4;font-size:12px}
+.signal dd {display:flex;align-items:center;gap:7px;margin:3px 0 0;font-weight:700;min-width:0}
+.dot {width:8px;height:8px;flex:none;border-radius:50%;background:#c1cadb}
+.signal[data-state=up] .dot {background:#71edcf;box-shadow:0 0 8px #78ead380}
+.signal[data-state=down] .dot {background:#ff9fad}
+.workspace {display:grid;grid-template-columns:minmax(240px,330px) minmax(0,1fr);gap:16px;margin-top:17px;align-items:start}
+.card {min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:15px;box-shadow:0 8px 28px #172a5620}
+.heading {min-height:61px;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line)}
+.heading h2 {font-size:17px}
+.heading p,.hint {color:var(--muted);font-size:12px}
+.button {display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:37px;padding:4px 12px;color:var(--ink);border:1px solid #bdcbe0;border-radius:8px;background:white;cursor:pointer;text-decoration:none;white-space:nowrap}
+.button:hover:not(:disabled),.button:focus-visible:not(:disabled) {border-color:#6e8bbf;background:#eef3fc}
+.button.primary {background:#304fbc;color:white;border-color:#304fbc;font-weight:700}
+.button.primary:hover:not(:disabled) {background:#203d9e}
+.upload-body {padding:15px}
+.drop {position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:123px;padding:14px 10px;text-align:center;border:1px dashed #7795d6;border-radius:12px;background:#eef3ff;color:#193a86;cursor:pointer;overflow:hidden}
+.drop:is(:hover,[data-drag=true]) {background:#dfeaff;border-color:#304fbc}
+.drop input {position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.upload-symbol {font:700 21px/1 system-ui;display:grid;place-items:center;width:32px;height:32px;background:#dbe6ff;border-radius:9px;color:#2847ac}
+.choice {padding:9px 0 0;min-height:38px;color:var(--muted);overflow-wrap:anywhere}
+.choice bdi {color:var(--ink);font-weight:700}
+.upload-actions {display:flex;align-items:center;gap:8px;margin-top:10px}
+.upload-actions .primary {flex:1}
+.notice {margin-top:10px;color:var(--muted);overflow-wrap:anywhere;font-size:13px}
+.notice:empty {display:none}
+.notice[data-error=true] {color:var(--red)}
+.search {margin:13px 15px 10px;display:flex;align-items:center;gap:9px}
+.search input {width:100%;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:7px 10px;color:var(--ink)}
+.table {width:100%;border-collapse:collapse;table-layout:fixed}
+.table th,.table td {text-align:start;padding:10px 12px}
+.table th {background:var(--soft);font-size:12px;color:var(--muted)}
+.table td {border-bottom:1px solid #e6ebf4}
+.table th:first-child,.table td:first-child {padding-inline-start:16px}
+.table th:nth-child(2) {width:106px}
+.table th:last-child {width:96px}
+.name {display:inline-block;max-width:100%;overflow-wrap:anywhere;font-weight:600;vertical-align:middle}
+.size {white-space:nowrap;color:var(--muted);font-size:12px}
+.download {font-size:12px;min-height:32px;padding:3px 8px;color:#254092}
+.list-note {padding:8px 16px;color:var(--muted);font-size:13px}
+.list-note[data-error=true] {color:var(--red)}
+.pager {display:flex;justify-content:space-between;align-items:center;gap:7px;padding:11px 14px;color:var(--muted);font-size:12px}
+.pager button {min-height:34px}
+@media(max-width:780px) {
+  .shell {padding-top:16px}
+  .workspace {grid-template-columns:1fr;gap:12px}
+  .overview {grid-template-columns:1fr;gap:12px;padding:17px 14px}
+  .signal {padding:7px 10px}
+  .drop {min-height:99px}
+}
+@media(max-width:415px) {
+  .heading {padding-inline:12px}
+  .table th,.table td {padding-inline:6px}
+  .table th:nth-child(2) {width:82px}
+  .table th:last-child {width:76px}
+}
 </style>
 </head>
 <body>
-<div class="shell">
-<header>
-  <div class="brand"><span class="brand-mark" aria-hidden="true">R</span><div><span class="wordmark" dir="ltr">ROHAM</span><span class="subtitle">مدیریت دوربین و ذخیره‌سازی</span></div></div>
-  <div class="connection"><i class="dot" id="linkDot" aria-hidden="true"></i><span id="connection">در انتظار اتصال</span></div>
+<header class="top">
+  <div class="bar">
+    <div class="brand"><span class="mark" aria-hidden="true">R</span><bdi class="brandword" dir="ltr">ROHAM DATA</bdi></div>
+    <button type="button" id="logout" class="button logout">خروج</button>
+  </div>
 </header>
-<main>
-  <div class="hero"><div><h1>اتاق کنترل</h1><p id="scope">شبکهٔ محلی</p></div><button id="logout" class="quiet" hidden>خروج</button></div>
-  <form id="access" class="access"><div class="field"><label for="key">کلید خصوصی شبکه</label><input id="key" type="password" autocomplete="off" required></div><button type="submit" class="primary">اتصال</button><span id="authMessage" class="muted" role="status"></span></form>
-  <div class="board">
-    <section class="card" aria-labelledby="cameraTitle">
-      <div class="card-head"><h2 id="cameraTitle">تصویر دوربین</h2><span class="mode"><i class="dot" id="frameDot" aria-hidden="true"></i><span id="frameMode" class="muted">آمادهٔ پیش‌نمایش</span></span></div>
-      <div class="stage"><div class="empty" id="empty"><i class="empty-icon" aria-hidden="true"></i><strong>تصویر دوربین اینجا نمایش داده می‌شود</strong><span>پیش‌نمایش زنده را روشن کنید یا عکسی از گالری باز کنید.</span></div><img id="image" alt="تصویر انتخاب‌شده از دوربین ROHAM" hidden></div>
-      <div class="toolbar">
-        <button id="live" class="primary" disabled>تصویر زنده</button>
-        <button id="capture" disabled>عکس و ذخیره</button>
-        <button id="latest" disabled>آخرین عکس</button>
-        <button id="download" disabled>دانلود تصویر</button>
-      </div>
-      <p id="notice" class="notice" role="status"></p>
+<main class="shell">
+  <section class="overview" aria-labelledby="pageTitle">
+    <div class="intro">
+      <h1 id="pageTitle">دیتاسنتر</h1>
+      <p>ارسال و دریافت فایل از کارت حافظهٔ DATA</p>
+    </div>
+    <dl class="signals" aria-label="وضعیت دیتاسنتر">
+      <div class="signal" id="dataSignal"><dt>اتصال DATA</dt><dd><i class="dot" aria-hidden="true"></i><span id="dataValue">در حال بررسی</span></dd></div>
+      <div class="signal" id="sdSignal"><dt>کارت حافظه</dt><dd><i class="dot" aria-hidden="true"></i><span id="sdValue">در حال بررسی</span></dd></div>
+    </dl>
+  </section>
+  <div class="workspace">
+    <section class="card" aria-labelledby="uploadTitle">
+      <div class="heading"><div><h2 id="uploadTitle">آپلود روی کارت</h2><p id="uploadLimit">حداکثر ۸ مگابایت برای هر فایل</p></div></div>
+      <form id="uploadForm" class="upload-body">
+        <label class="drop" id="drop">
+          <input type="file" id="phoneFile" aria-describedby="uploadLimit">
+          <span class="upload-symbol" aria-hidden="true">↑</span>
+          <strong>انتخاب فایل</strong>
+          <span class="hint">برای انتخاب ضربه بزنید</span>
+        </label>
+        <div class="choice" id="selection" aria-live="polite">فایلی انتخاب نشده است.</div>
+        <div class="upload-actions">
+          <button type="submit" id="uploadButton" class="button primary" disabled>ارسال به DATA</button>
+          <button type="button" class="button" id="clearFile" hidden>پاک‌کردن انتخاب</button>
+        </div>
+        <p id="uploadNotice" class="notice" role="status"></p>
+      </form>
     </section>
-    <section class="card" aria-labelledby="nodesTitle">
-      <div class="card-head"><h2 id="nodesTitle">وضعیت بردها</h2><span class="muted" id="onlineCount">—</span></div>
-      <ul id="nodes" class="node-list"></ul>
-      <div class="device-footer"><div class="muted"><div id="storage">کارت DATA · نامشخص</div><div id="cameraStorage">کارت CAM · نامشخص</div></div><button id="clock" disabled>تنظیم ساعت دوربین</button></div>
+    <section class="card" aria-labelledby="filesTitle">
+      <div class="heading"><div><h2 id="filesTitle">فایل‌های کارت</h2><p id="fileCount">آمادهٔ دریافت فهرست</p></div><button type="button" id="refresh" class="button">تازه‌سازی</button></div>
+      <div class="search"><input id="filter" type="search" placeholder="جست‌وجو در این صفحه" aria-label="جست‌وجو در فایل‌های همین صفحه"></div>
+      <table class="table" id="table" hidden>
+        <thead><tr><th scope="col">نام فایل</th><th scope="col">حجم</th><th scope="col">دریافت</th></tr></thead>
+        <tbody id="fileRows"></tbody>
+      </table>
+      <p id="listNote" class="list-note" role="status"></p>
+      <div class="pager" id="pager" hidden>
+        <button type="button" class="button" id="prev">صفحهٔ قبل</button>
+        <span id="pageNumber"></span>
+        <button type="button" class="button" id="next">صفحهٔ بعد</button>
+      </div>
     </section>
   </div>
-  <section class="card gallery" aria-labelledby="galleryTitle">
-    <div class="card-head"><h2 id="galleryTitle">گالری دیتاسنتر</h2><button id="refresh" class="quiet" disabled>تازه‌سازی</button></div>
-    <p class="gallery-empty" id="galleryEmpty">برای دیدن عکس‌ها متصل شوید.</p>
-    <ul class="gallery-items" id="files" hidden></ul>
-    <div class="gallery-footer" id="galleryFooter" hidden><button id="previous" disabled>صفحهٔ قبل</button><span id="page"></span><button id="next" disabled>صفحهٔ بعد</button></div>
-  </section>
-  <section class="card gallery" id="phoneStorage" aria-labelledby="uploadTitle" hidden>
-    <div class="card-head"><h2 id="uploadTitle">فایل‌های کارت DATA</h2><button id="refreshUploads" class="quiet" disabled>تازه‌سازی</button></div>
-    <form id="uploadForm">
-      <label for="phoneFile">انتخاب فایل از گوشی</label>
-      <input type="file" id="phoneFile" aria-describedby="uploadLimit" required>
-      <button type="submit" id="uploadButton" class="primary" disabled>آپلود روی کارت</button>
-      <span id="uploadLimit">حداکثر ۸ مگابایت برای هر فایل</span>
-    </form>
-    <p id="uploadNotice" class="notice" role="status">برای دیدن فایل‌های کارت، تازه‌سازی را بزنید.</p>
-    <ul class="gallery-items" id="phoneFiles" hidden></ul>
-    <div class="gallery-footer" id="uploadPages" hidden>
-      <button id="previousUploads" disabled>صفحهٔ قبل</button><span id="uploadPage"></span><button id="nextUploads" disabled>صفحهٔ بعد</button>
-    </div>
-  </section>
 </main>
-</div>
 <script>
 'use strict';
-const $ = id => document.getElementById(id);
-const cloud = document.documentElement.dataset.mode === 'cloud';
-const roles = {MEDIA:'پردازندهٔ مرکزی',DATA:'دیتاسنتر',CAM:'دوربین',WEB:'نمایشگر و سایت'};
-const commands = ['live','capture','latest','clock','refresh'];
-const SD_UPLOAD_MAX = 8 * 1024 * 1024;
-let uploadOffset=0, moreUploads=false;
-let token = '', unlocked = false, working = false, liveEpoch = 0, liveRunning = false, liveTask;
-let storageOffset = 0, hasNext = false, imageUrl = '', imageName = '', polling = false, galleryLoaded = false, lastHub = false;
-const nodeViews = {};
-for (const [role,name] of Object.entries(roles)) {
-  const node = document.createElement('li');
-  node.className = 'node';
-  node.innerHTML = '<div class="node-main"><span class="node-name"><i class="dot" aria-hidden="true"></i><span></span><small class="num node-id"></small></span><span class="node-state">نامشخص</span></div><div class="meter" aria-hidden="true"><i></i></div><div class="node-meta"><span>فعالیت</span><span class="num">—</span></div>';
-  node.querySelector('.node-name span').textContent = name;
-  node.querySelector('small').textContent = role;
-  nodeViews[role] = node;
-  $('nodes').append(node);
-}
-function say(text, error=false) { $('notice').textContent = text; $('notice').dataset.error = String(error); }
-function syncButtons() {
-  for (const id of commands) $(id).disabled = !unlocked || working;
-  $('previous').disabled = !unlocked || working || !storageOffset;
-  $('next').disabled = !unlocked || working || !hasNext;
-  $('download').disabled = !imageUrl || working;
-  $('live').textContent = liveRunning ? 'توقف تصویر زنده' : 'تصویر زنده';
-  if (cloud) {
-    $('phoneFile').disabled = !unlocked || working;
-    $('uploadButton').disabled = !unlocked || working || !$('phoneFile').files.length;
-    $('refreshUploads').disabled = !unlocked || working;
-    $('previousUploads').disabled = !unlocked || working || !uploadOffset;
-    $('nextUploads').disabled = !unlocked || working || !moreUploads;
-  }
-}
-async function api(path, method='GET', timeout=24000, body) {
-  const headers = {'X-Roham-Panel':'1'};
-  if (!cloud) headers['X-Roham-Key'] = token;
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeout);
-  try {
-    const response = await fetch(path, {method,headers,body,signal:controller.signal,cache:'no-store',credentials:'same-origin'});
-    if (response.status === 401 && cloud) { location.reload(); throw new Error('نشست پایان یافته است.'); }
-    if (!response.ok) {
-      if (response.status === 413) throw new Error('حجم فایل بیشتر از ۸ مگابایت است.');
-      if (response.status === 403) throw new Error('کلید شبکه معتبر نیست.');
-      if (response.status === 404) throw new Error('عکس در دسترس نیست.');
-      if (response.status === 409 || response.status === 429) throw new Error('سامانه مشغول است. دوباره امتحان کنید.');
-      if (response.status === 502 || response.status === 503) throw new Error('برد یا کارت موردنیاز در دسترس نیست.');
-      throw new Error('خطای ارتباط (' + response.status + ')');
-    }
-    return response.headers.get('content-type')?.startsWith('image/') ? await response.blob() : await response.json();
-  } catch (e) {
-    if (e.name === 'AbortError') throw new Error('مهلت پاسخ پایان یافت.');
-    throw e;
-  } finally { clearTimeout(timer); }
-}
-function updateNodes(data) {
-  const byRole = Object.fromEntries((data.nodes || []).map(node => [node.role,node]));
-  let count=0;
-  for(const [role,view] of Object.entries(nodeViews)){
-    const n=byRole[role];
-    const state=n?.online?'up':n?'down':'unknown';
-    if(n?.online) count++;
-    view.querySelector('.dot').dataset.state=state;
-    const label=view.querySelector('.node-state');
-    label.dataset.state=state;
-    label.textContent=state==='up'?'آنلاین':state==='down'?'آفلاین':'نامشخص';
-    const busy=n?.online && Number.isFinite(n.busy) ? Math.min(100,Math.max(0,n.busy)) : null;
-    view.querySelector('.meter i').style.width=(busy??0)+'%';
-    view.querySelector('.node-meta .num').textContent=busy===null?'—':busy+'%';
-  }
-  $('onlineCount').textContent = count.toLocaleString('fa-IR') + ' از ۴ آنلاین';
-  $('linkDot').dataset.state=data.hub?'up':'down';
-  $('connection').textContent=data.hub?'پردازندهٔ مرکزی متصل':'پردازندهٔ مرکزی در دسترس نیست';
-  const cardState=state=>state===true?'آماده':state===false?'در دسترس نیست':'نامشخص';
-  $('storage').textContent='کارت DATA · '+cardState(data.dataSd);
-  $('cameraStorage').textContent='کارت CAM · '+cardState(data.cameraSd);
-}
-async function poll() {
-  if(!unlocked || polling || working || liveRunning) return;
-  polling=true;
-  try {
-    const state=await api('/api/cluster','GET',7000);
-    updateNodes(state);
-    if(state.hub && !lastHub && !galleryLoaded && !working && !liveRunning) run(() => loadGallery(0));
-    lastHub=state.hub;
-  } catch(e) { updateNodes({}); $('connection').textContent=e.message; }
-  finally { polling=false; }
-}
-function photoName(id) { return 'IMG'+String(id).padStart(5,'0')+'.jpg'; }
-function show(blob,name) {
-  if (!(blob instanceof Blob) || !blob.size) throw new Error('تصویر قابل نمایش نیست.');
-  if (imageUrl) URL.revokeObjectURL(imageUrl);
-  imageUrl=URL.createObjectURL(blob); imageName=name;
-  $('image').src=imageUrl; $('image').hidden=false; $('empty').hidden=true;
-  syncButtons();
-}
-async function stopLive() {
-  liveRunning=false; ++liveEpoch; syncButtons();
-  if (liveTask) await liveTask;
-  $('frameDot').dataset.state='unknown';
-  $('frameMode').textContent=imageUrl?'تصویر ثابت':'آمادهٔ پیش‌نمایش';
-}
-async function preview(epoch) {
-  let frames=0, started=performance.now(), failures=0, lastStatus=started;
-  while(liveRunning && epoch===liveEpoch) {
-    try {
-      const frame=await api('/frame','GET',8500);
-      if(!liveRunning || epoch!==liveEpoch) return;
-      show(frame,'roham-frame.jpg');
-      frames++; failures=0;
-      const now=performance.now();
-      if(now-lastStatus >= 5500){
-        try { updateNodes(await api('/api/cluster','GET',3500)); } catch {}
-        lastStatus=performance.now();
-      }
-      $('frameMode').textContent='زنده · '+(frames*1000/Math.max(1,now-started)).toFixed(1)+' fps';
-      $('frameDot').dataset.state='up'; say('');
-    } catch(e) {
-      if(epoch!==liveEpoch) return;
-      failures++; say(e.message,true);
-      $('frameDot').dataset.state='down'; $('frameMode').textContent='تلاش برای دریافت تصویر';
-    }
-    await new Promise(resolve=>setTimeout(resolve,failures?Math.min(2500, failures*450):cloud?450:130));
-  }
-}
-async function run(fn, onError=e=>say(e.message,true)) {
-  if(!unlocked || working) return;
-  working=true; syncButtons();
-  try { if(liveRunning) await stopLive(); await fn(); }
-  catch(e) { onError(e); }
-  finally { working=false; syncButtons(); }
-}
-function renderGallery(data, offset) {
-  const items=$('files'); items.replaceChildren();
-  storageOffset=offset; hasNext=!!data.more; galleryLoaded=true;
-  for(const file of data.files || []) {
-    const name=file.name;
-    if(!/^IMG\\d{5,9}\\.jpg$/i.test(name)) continue;
-    const id=Number(name.slice(3,-4));
-    const li=document.createElement('li'); li.className='file';
-    const open=document.createElement('button'); open.className='file-main'; open.innerHTML='<span class="num file-label"></span><small></small>';
-    open.firstElementChild.textContent=name; open.lastElementChild.textContent=Math.ceil(file.size/1024).toLocaleString('fa-IR')+' کیلوبایت';
-    open.onclick=()=>run(async()=>{ show(await api('/photo/'+id),name); $('frameMode').textContent='عکس ذخیره‌شده'; say(name); });
-    const del=document.createElement('button');del.className='danger';del.textContent='حذف';del.setAttribute('aria-label','حذف '+name);
-    del.onclick=()=>run(async()=>{
-      if(!confirm('عکس '+name+' حذف شود؟')) return;
-      await api('/delete/'+id,'POST');
-      await loadGallery(offset);
-      if(!$('files').children.length && offset) await loadGallery(Math.max(0,offset-32));
-      say('عکس حذف شد.');
-    });
-    li.append(open,del);items.append(li);
-  }
-  const any=items.children.length>0;
-  items.hidden=!any; $('galleryEmpty').hidden=any;
-  $('galleryEmpty').textContent='در این صفحه عکسی وجود ندارد.';
-  $('galleryFooter').hidden=!any && !offset;
-  $('page').textContent='صفحهٔ '+(Math.floor(offset/32)+1).toLocaleString('fa-IR');
-  syncButtons();
-}
-async function loadGallery(offset) { renderGallery(await api('/gallery?offset='+offset),offset); }
-$('access').onsubmit=async e=>{
-  e.preventDefault();
-  if (working) return;
-  working=true; $('authMessage').textContent='در حال اتصال…';
-  token=$('key').value;
-  try {
-    const state=await api('/api/cluster','GET',7000);
-    unlocked=true; $('access').hidden=true; $('logout').hidden=false;
-    $('key').value=''; $('authMessage').textContent=''; updateNodes(state);lastHub=state.hub;
-  } catch(err) {unlocked=false;token='';$('authMessage').textContent=err.message;}
-  finally {working=false;syncButtons();}
-  if(unlocked && lastHub) run(()=>loadGallery(0));
-};
-$('logout').onclick=async()=>{
-  if(cloud) { try { await api('/logout','POST');location.reload(); } catch(e){say(e.message,true);} }
-  else location.reload();
-};
-$('live').onclick=async()=>{
-  if(liveRunning) {await run(async()=>{});return;}
-  if(working || !unlocked) return;
-  liveRunning=true; syncButtons(); liveTask=preview(++liveEpoch);
-};
-$('capture').onclick=()=>run(async()=>{
-  say('در حال عکس‌برداری و ذخیره…');
-  const res=await api('/capture','POST');
-  if(!res.id) throw new Error('شناسهٔ عکس دریافت نشد.');
-  show(await api('/photo/'+res.id),photoName(res.id));$('frameMode').textContent='عکس ذخیره‌شده';
-  say('در دیتاسنتر ذخیره شد · '+photoName(res.id));
-  await loadGallery(0);
-});
-$('latest').onclick=()=>run(async()=>{
-  show(await api('/latest'),'roham-latest.jpg');$('frameMode').textContent='آخرین عکس';say('');
-});
-$('clock').onclick=()=>run(async()=>{
-  await api('/time?epoch='+Math.floor(Date.now()/1000),'POST');say('ساعت دوربین تنظیم شد.');
-});
-$('download').onclick=()=>{
-  if(!imageUrl) return;
-  const a=document.createElement('a');a.href=imageUrl;a.download=imageName;a.click();
-};
-$('refresh').onclick=()=>run(()=>loadGallery(storageOffset));
-$('previous').onclick=()=>run(()=>loadGallery(Math.max(0,storageOffset-32)));
-$('next').onclick=()=>run(()=>loadGallery(storageOffset+32));
-function uploadNote(text,error=false) {
-  $('uploadNotice').textContent=text;
-  $('uploadNotice').dataset.error=String(error);
-}
-function runUpload(fn) { return run(fn,e=>uploadNote(e.message,true)); }
+const $=id=>document.getElementById(id);
+const MAX_BYTES=8*1024*1024;
+const number=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:1});
+let selected=null, working=false, checking=false, dataState, loaded=false;
+let offset=0, more=false, items=[];
 
-async function loadUploads(offset) {
-  const page=await api('/uploads?offset='+offset);
-  const list=$('phoneFiles');
-  list.replaceChildren();
-  for (const item of page.files || []) {
-    const row=document.createElement('li');
-    row.className='file';
-    const label=document.createElement('span');
-    label.className='upload-name';
-    const fileName=document.createElement('bdi');
-    fileName.textContent=item.name;
-    label.append(fileName);
-    const size=document.createElement('small');
-    size.textContent=Math.ceil(item.size/1024).toLocaleString('fa-IR')+' کیلوبایت';
-    label.append(size);
-    const link=document.createElement('a');
-    link.href='/uploads/'+encodeURIComponent(item.key);
-    link.download=item.name;
-    link.textContent='دانلود';
-    link.onclick=e=>{if (working || liveRunning) {
-      e.preventDefault();
-      if (liveRunning && !working) runUpload(async()=>{location.assign(link.href);});
-    }};
-    row.append(label,link);list.append(row);
-  }
-  uploadOffset=offset;moreUploads=!!page.more;
-  list.hidden=!list.children.length;
-  $('uploadPages').hidden=list.hidden && !offset;
-  $('uploadPage').textContent='صفحهٔ '+(Math.floor(offset/8)+1).toLocaleString('fa-IR');
-  uploadNote(list.hidden?'فایلی در این صفحه نیست.':'فهرست فایل‌ها به‌روز شد.');
+function formatSize(bytes) {
+  if (bytes<1024) return number.format(bytes)+' بایت';
+  if (bytes<1024*1024) return number.format(bytes/1024)+' کیلوبایت';
+  return number.format(bytes/(1024*1024))+' مگابایت';
 }
-
-$('phoneFile').onchange=syncButtons;
-$('refreshUploads').onclick=()=>runUpload(()=>loadUploads(uploadOffset));
-$('previousUploads').onclick=()=>runUpload(()=>loadUploads(Math.max(0,uploadOffset-8)));
-$('nextUploads').onclick=()=>runUpload(()=>loadUploads(uploadOffset+8));
-$('uploadForm').onsubmit=e=>{
-  e.preventDefault();
-  if (!cloud) return;
-  const file=$('phoneFile').files[0];
-  if (!file) return;
-  runUpload(async()=>{
-    if (file.size>SD_UPLOAD_MAX) throw new Error('حداکثر حجم هر فایل ۸ مگابایت است.');
-    if (new TextEncoder().encode(file.name).length>84) throw new Error('نام فایل را کوتاه‌تر کنید.');
-    uploadNote('در حال ارسال و ذخیره روی کارت DATA…');
-    const params=new URLSearchParams({name:file.name,size:String(file.size)});
-    const result=await api('/uploads?'+params,'POST',600000,file);
-    if (result.saved!==true) throw new Error('ذخیرهٔ فایل تأیید نشد.');
+function message(element,text,error=false) {
+  $(element).textContent=text;
+  $(element).dataset.error=String(error);
+}
+function syncActions() {
+  $('phoneFile').disabled=working;
+  $('uploadButton').disabled=working||!selected;
+  $('clearFile').hidden=!selected;
+  $('clearFile').disabled=working;
+  $('refresh').disabled=working;
+  $('prev').disabled=working||offset===0;
+  $('next').disabled=working||!more;
+  $('logout').disabled=working;
+}
+function setFile(file) {
+  selected=file||null;
+  const place=$('selection');
+  place.replaceChildren();
+  if (selected) {
+    const name=document.createElement('bdi');
+    name.textContent=selected.name;
+    place.append(name,' · '+formatSize(selected.size));
+  } else {
     $('phoneFile').value='';
-    try { await loadUploads(0); } catch {}
-    uploadNote('روی کارت DATA ذخیره شد · '+result.name);
+    place.textContent='فایلی انتخاب نشده است.';
+  }
+  message('uploadNotice','');
+  syncActions();
+}
+function signal(element,label,state) {
+  $(element+'Signal').dataset.state=state;
+  $(element+'Value').textContent=label;
+}
+function renderStatus(state) {
+  dataState=state;
+  const connected=state.online;
+  signal('data',connected===true?'آنلاین':connected===false?'آفلاین':'نامشخص',
+         connected===true?'up':connected===false?'down':'unknown');
+  const mounted=state.mounted;
+  signal('sd',mounted===true?'آماده':mounted===false?'در دسترس نیست':'نامشخص',
+         mounted===true?'up':mounted===false?'down':'unknown');
+}
+
+async function api(path,{method='GET',body,timeout=24000}={}) {
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),timeout);
+  try {
+    const response=await fetch(path,{method,body,signal:controller.signal,credentials:'same-origin',
+      cache:'no-store',headers:{'X-Roham-Panel':'1'}});
+    if (response.status===401) {location.assign('/');throw new Error('نشست پایان یافته است.');}
+    if (!response.ok) {
+      if (response.status===400) throw new Error('نام یا اندازهٔ فایل قابل استفاده نیست.');
+      if (response.status===409||response.status===429) throw new Error('دیتاسنتر مشغول است. دوباره امتحان کنید.');
+      if (response.status===413) throw new Error('حجم فایل بیشتر از ۸ مگابایت است.');
+      if (response.status===502||response.status===503) throw new Error('دیتاسنتر یا کارت حافظه در دسترس نیست.');
+      if (response.status===504) throw new Error('مهلت پاسخ دیتاسنتر تمام شد.');
+      throw new Error('ارتباط با سایت ناموفق بود ('+response.status+').');
+    }
+    return await response.json();
+  } catch(error) {
+    if (error.name==='AbortError') throw new Error('مهلت پاسخ تمام شد.');
+    if (error instanceof TypeError) throw new Error('ارتباط با Cloudflare برقرار نشد.');
+    throw error;
+  } finally {clearTimeout(timer);}
+}
+
+function makeDownload(file,label) {
+  const link=document.createElement('a');
+  link.href='/uploads/'+encodeURIComponent(file.key);
+  link.download=file.name;
+  link.className='button download';
+  link.textContent=label;
+  link.setAttribute('aria-label','دانلود '+file.name);
+  link.onclick=event=>{if(working)event.preventDefault();};
+  return link;
+}
+function renderFiles() {
+  const match=$('filter').value.trim().toLocaleLowerCase('fa-IR');
+  const visible=items.filter(file=>file.name.toLocaleLowerCase('fa-IR').includes(match));
+  const rows=$('fileRows');
+  rows.replaceChildren();
+  for (const file of visible) {
+    const row=document.createElement('tr');
+    const nameCell=row.insertCell();
+    const label=document.createElement('bdi');
+    label.className='name';
+    label.textContent=file.name;
+    nameCell.append(label);
+    const size=row.insertCell();
+    size.className='size';
+    size.textContent=formatSize(file.size);
+    row.insertCell().append(makeDownload(file,'دانلود'));
+    rows.append(row);
+  }
+  $('fileCount').textContent=number.format(visible.length)+' فایل در این صفحه';
+  $('table').hidden=visible.length===0;
+  $('pager').hidden=offset===0&&!more;
+  $('pageNumber').textContent='صفحهٔ '+number.format(Math.floor(offset/8)+1);
+  message('listNote',visible.length?'':match?'فایلی با این نام در صفحه نیست.':'این صفحه فایلی ندارد.');
+  syncActions();
+}
+async function loadFiles(pageOffset) {
+  const page=await api('/uploads?offset='+pageOffset);
+  offset=pageOffset;
+  more=!!page.more;
+  items=page.files;
+  loaded=true;
+  renderFiles();
+}
+async function run(fn,report='listNote') {
+  if (working) return;
+  working=true;syncActions();
+  try {await fn();}
+  catch(error) {message(report,error.message,true);}
+  finally {working=false;syncActions();}
+}
+async function status() {
+  if (checking) return;
+  checking=true;
+  try {
+    const previous=dataState;
+    renderStatus(await api('/api/storage',{timeout:7000}));
+    if (previous?.mounted===true && dataState.mounted!==true) loaded=false;
+    if (dataState.mounted===true && !loaded && !working) run(()=>loadFiles(offset));
+    else if (!loaded && !working && !items.length && dataState.mounted===false)
+      message('listNote','پس از آماده شدن کارت، فهرست اینجا نمایش داده می‌شود.');
+  } catch {
+    renderStatus({});
+    if (!loaded && !working) message('listNote','وضعیت دیتاسنتر دریافت نشد. دوباره تازه‌سازی کنید.',true);
+  } finally {checking=false;}
+}
+
+$('phoneFile').onchange=()=>setFile($('phoneFile').files[0]);
+$('clearFile').onclick=()=>setFile(null);
+for (const event of ['dragenter','dragover']) {
+  $('drop').addEventListener(event,e=>{e.preventDefault();if(!working)$('drop').dataset.drag='true';});
+}
+for (const event of ['dragleave','drop']) {
+  $('drop').addEventListener(event,e=>{e.preventDefault();$('drop').dataset.drag='false';});
+}
+$('drop').addEventListener('drop',e=>{if(!working&&e.dataTransfer?.files.length)setFile(e.dataTransfer.files[0]);});
+$('filter').oninput=()=>{if(loaded)renderFiles();};
+$('refresh').onclick=async()=>{
+  await status();
+  if(!working) run(()=>{
+    message('listNote','در حال دریافت فهرست…');
+    return loadFiles(offset);
   });
 };
+$('prev').onclick=()=>run(()=>loadFiles(Math.max(0,offset-8)));
+$('next').onclick=()=>run(()=>loadFiles(offset+8));
+$('logout').onclick=()=>run(async()=>{await api('/logout',{method:'POST'});location.assign('/');});
 
-addEventListener('pagehide',()=>{ liveRunning=false; ++liveEpoch; if(imageUrl) URL.revokeObjectURL(imageUrl); });
-if(cloud){
-  $('phoneStorage').hidden=false;
-  $('scope').textContent='اتصال ابری';$('access').hidden=true;$('logout').hidden=false;unlocked=true;syncButtons();poll();
-}else $('key').focus();
-setInterval(poll, 6000);
+$('uploadForm').onsubmit=event=>{
+  event.preventDefault();
+  const file=selected;
+  if(!file)return;
+  run(async()=>{
+    if(file.size>MAX_BYTES)throw new Error('حداکثر حجم هر فایل ۸ مگابایت است.');
+    if(new TextEncoder().encode(file.name).length>84)throw new Error('نام فایل را کوتاه‌تر کنید.');
+    message('uploadNotice','در حال ارسال و ذخیره روی کارت…');
+    const params=new URLSearchParams({name:file.name,size:String(file.size)});
+    const result=await api('/uploads?'+params,{method:'POST',body:file,timeout:600000});
+    if(result.saved!==true)throw new Error('ذخیرهٔ فایل تأیید نشد.');
+    setFile(null);
+    $('filter').value='';
+    try {await loadFiles(0);}
+    catch {message('listNote','برای دیدن فایل جدید، فهرست را تازه‌سازی کنید.',true);}
+    message('uploadNotice','روی کارت ذخیره شد · '+result.name+' ');
+    $('uploadNotice').append(makeDownload(result,'دانلود فایل'));
+  },'uploadNotice');
+};
+syncActions();
+status();
+setInterval(status,10000);
 <\/script>
 </body>
 </html>
 `;
 
-// scratch/roham-phone/github/site/login.html
+// scratch/roham-datacenter/src/login.html
 var login_default = `<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#101613">
-<title>ROHAM | ورود</title>
+<meta name="theme-color" content="#101c38">
+<title>ورود به ROHAM DATA</title>
 <style>
-:root{color-scheme:dark;font:15px/1.75 Tahoma,"Segoe UI",system-ui,sans-serif;color:#eff5ed;background:#101613}
-*{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 50% 35%,#213229 0,transparent 58%)}main{width:min(100%,420px);padding:32px;background:#17211d;border:1px solid #2d4135;border-radius:16px}.brand{display:flex;gap:12px;align-items:center;font:800 15px/1 system-ui;letter-spacing:.18em;margin-bottom:22px}.mark{display:grid;place-items:center;background:#bfe98d;color:#172314;width:36px;height:36px;border-radius:11px;font:900 22px/1 system-ui}h1{margin:0;font-size:26px}p,label{color:#a5b8ac}p{margin:5px 0 22px}label{display:block;margin-bottom:5px}input,button{display:block;width:100%;font:inherit;border-radius:8px;min-height:44px}input{background:#101613;border:1px solid #425b4c;padding:8px;color:#eff5ed;direction:ltr}button{border:0;background:#bfe98d;color:#172314;font-weight:700;margin-top:12px;cursor:pointer}button:disabled{opacity:.5}button:focus-visible,input:focus-visible{outline:2px solid #bfe98d;outline-offset:2px}#message{min-height:24px;color:#ffaaa0;margin-bottom:0}
+:root{color-scheme:light;font:14px/1.85 "Noto Sans Arabic",Tahoma,"Segoe UI",Arial,sans-serif;color:#182441;background:#eff3f9}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;display:grid;place-items:center;padding:17px;background:radial-gradient(ellipse at 50% 0,#263e78 0,#101c38 52%)}
+main{width:min(100%,421px);background:#fff;border:1px solid #c4d2ec;border-radius:19px;padding:28px;box-shadow:0 22px 74px #080e27a6}
+.brand{display:flex;align-items:center;gap:9px;margin-bottom:17px}
+.mark{background:#72e0ec;color:#101c38;font:900 15px/1 system-ui;display:grid;place-items:center;width:36px;height:36px;border-radius:10px}
+.word{font:700 15px/1.45 system-ui;letter-spacing:.12em}
+h1,p{margin:0}
+h1{font-size:27px}
+label{display:block;margin:14px 0 4px;color:#435572}
+input,button{font:inherit;width:100%;border-radius:9px;min-height:43px}
+input{direction:ltr;border:1px solid #b9c9e3;padding:5px 9px;background:#f6f8fc;color:#182441}
+button{margin-top:12px;border:1px solid #304fbc;background:#304fbc;color:#fff;font-weight:bold;cursor:pointer}
+button:hover{background:#213e9c}
+button:disabled{opacity:.55;cursor:default}
+:focus-visible{outline:3px solid #648bff;outline-offset:3px}
+#message{color:#a22e49;margin-top:9px}
+#message:empty{display:none}
 </style>
 </head>
 <body>
 <main>
-<div class="brand"><span class="mark" aria-hidden="true">R</span><span dir="ltr">ROHAM</span></div>
-<h1>ورود به اتاق کنترل</h1><p>رمز سایت را برای اتصال ابری وارد کنید.</p>
-<form id="login"><label for="password">رمز سایت</label><input id="password" type="password" required maxlength="200" autocomplete="current-password"><button type="submit">ورود</button></form>
-<p id="message" role="status"></p>
+  <div class="brand"><span class="mark" aria-hidden="true">R</span><bdi class="word" dir="ltr">ROHAM DATA</bdi></div>
+  <h1>ورود به دیتاسنتر</h1>
+  <form id="login">
+    <label for="password">رمز سایت</label>
+    <input id="password" type="password" required maxlength="200" autocomplete="current-password">
+    <button type="submit">ورود</button>
+  </form>
+  <p id="message" role="status"></p>
 </main>
 <script>
 'use strict';
 document.getElementById('login').onsubmit=async event=>{
   event.preventDefault();
   const button=event.currentTarget.querySelector('button'), message=document.getElementById('message');
-  button.disabled=true;message.textContent='';
+  button.disabled=true;
+  message.textContent='';
   try {
     const response=await fetch('/login',{method:'POST',headers:{'Content-Type':'application/json','X-Roham-Panel':'1'},body:JSON.stringify({password:document.getElementById('password').value})});
-    if(response.ok)location.replace('/');
-    else message.textContent=response.status===429?'تلاش بیش از حد. پنج دقیقه دیگر امتحان کنید.':response.status===503?'تنظیمات سرور کامل نیست.':'رمز سایت معتبر نیست.';
+    if(response.ok){location.replace('/');return;}
+    message.textContent=response.status===429?'تعداد تلاش زیاد است. پنج دقیقه دیگر امتحان کنید.':response.status===503?'تنظیمات سرور کامل نیست.':'رمز سایت پذیرفته نشد.';
   }catch{message.textContent='ارتباط با سرور برقرار نشد.';}
   finally{button.disabled=false;}
 };
@@ -389,11 +396,9 @@ document.getElementById('login').onsubmit=async event=>{
 </html>
 `;
 
-// scratch/roham-phone/github/src/worker.js
-var cloudPanel = panel_default.replace('data-mode="local"', 'data-mode="cloud"');
+// scratch/roham-datacenter/src/worker.js
 var SESSION = "roham_session";
 var SESSION_SECONDS = 12 * 3600;
-var MAX_PHOTO = 2e6;
 var MAX_UPLOAD = 8 * 1024 * 1024;
 var UPLOAD_BLOCK = 4096;
 var FILE_KEY = /^[a-f0-9]{32}\.[A-Za-z0-9_-]{1,112}$/;
@@ -417,7 +422,7 @@ function html(source) {
     headers: {
       ...standard,
       "Content-Type": "text/html; charset=utf-8",
-      "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src blob: data:; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+      "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
     }
   });
 }
@@ -501,9 +506,6 @@ async function checkLogin(request, env, secrets) {
   const value = expiry + "." + hex(crypto.getRandomValues(new Uint8Array(16)));
   return json({ ok: true }, 200, { "Set-Cookie": cookie(value + "." + await signature(value, secrets)) });
 }
-function photoName(id) {
-  return "IMG" + String(id).padStart(5, "0") + ".jpg";
-}
 function makeFileKey(name) {
   if (typeof name !== "string" || !name.trim() || /[\x00-\x1f\x7f/\\]/.test(name)) return null;
   const bytes = encoder.encode(name);
@@ -559,7 +561,7 @@ async function handleFileRoute(request, url, env) {
   if (request.method === "GET" && url.pathname.startsWith("/uploads/")) {
     const key = url.pathname.slice("/uploads/".length);
     if (!fileName(key)) return json({ error: "invalid file key" }, 404);
-    return stub.fetch("https://internal/command", { method: "POST", body: JSON.stringify({ op: "fileDownload", arg: key, image: true }) });
+    return stub.fetch("https://internal/command", { method: "POST", body: JSON.stringify({ op: "fileDownload", arg: key }) });
   }
   return json({ error: "unknown file route" }, 404);
 }
@@ -571,30 +573,6 @@ function timedRead(reader) {
       timer = setTimeout(() => reject(new Error("upload stream stalled")), 1e4);
     })
   ]).finally(() => clearTimeout(timer));
-}
-function commandFor(method, url) {
-  const path = url.pathname;
-  if (method === "GET") {
-    if (path === "/frame") return { op: "frame", image: true };
-    if (path === "/latest") return { op: "photo", arg: "latest", image: true };
-    if (path === "/gallery") {
-      const offset = url.searchParams.get("offset") ?? "0";
-      if (/^\d{1,7}$/.test(offset) && Number(offset) <= 1e6) return { op: "gallery", arg: Number(offset) };
-    }
-    const photo = /^\/photo\/([1-9]\d{0,8})$/.exec(path);
-    if (photo) return { op: "photo", arg: photoName(photo[1]), image: true };
-  } else if (method === "POST") {
-    if (path === "/capture") return { op: "capture" };
-    const target = /^\/delete\/([1-9]\d{0,8})$/.exec(path);
-    if (target) return { op: "delete", arg: photoName(target[1]) };
-    const epoch = url.searchParams.get("epoch");
-    if (path === "/time" && /^\d{10}$/.test(epoch || "") && Number(epoch) >= 17e8 && Number(epoch) <= 2147483647)
-      return { op: "time", arg: epoch };
-  }
-  return null;
-}
-function offlineState() {
-  return { hub: false, dataSd: null, cameraSd: null, last: 0, nodes: ["MEDIA", "DATA", "CAM", "WEB"].map((role) => ({ role, online: false })) };
 }
 var worker_default = {
   async fetch(request, env) {
@@ -613,18 +591,15 @@ var worker_default = {
     }
     const session = await hasSession(request, secrets);
     if (method === "GET" && (url.pathname === "/" || url.pathname === "/login" || url.pathname === "/panel"))
-      return html(session ? cloudPanel : login_default);
+      return html(session ? panel_default : login_default);
     if (!session) return json({ error: "login required" }, 401);
     if (method === "POST" && !safePost(request, url)) return json({ error: "forbidden" }, 403);
     if (method === "POST" && url.pathname === "/logout") return json({ ok: true }, 200, { "Set-Cookie": cookie("") });
-    if (method === "GET" && (url.pathname === "/api/cluster" || url.pathname === "/data-status")) {
-      const state = await (await hub(env).fetch("https://internal/status")).json();
-      return json(url.pathname === "/api/cluster" ? state : { sd: state.dataSd, last: state.last });
+    if (method === "GET" && url.pathname === "/api/storage") {
+      return hub(env).fetch("https://internal/status");
     }
     if (url.pathname === "/uploads" || url.pathname.startsWith("/uploads/")) return handleFileRoute(request, url, env);
-    const command = commandFor(method, url);
-    if (!command) return json({ error: "unknown command" }, 404);
-    return hub(env).fetch("https://internal/command", { method: "POST", body: JSON.stringify(command) });
+    return json({ error: "unknown route" }, 404);
   }
 };
 var LoginLimit = class {
@@ -673,21 +648,18 @@ var RohamHub = class {
     op.resolve(response);
   }
   state() {
-    const result = offlineState(), socket = this.socket();
-    if (!socket || socket.readyState !== 1) return result;
-    if (this.telemetry && Date.now() - this.telemetryAt < 15e3) return { ...this.telemetry, hub: true };
-    result.hub = true;
-    result.nodes[0].online = true;
-    return result;
+    if (!this.socket()) return { online: false, mounted: null };
+    if (this.telemetry && Date.now() - this.telemetryAt < 15e3) return this.telemetry;
+    return { online: null, mounted: null };
   }
   request(socket, command, chunk) {
     if (!socket || socket !== this.socket() || socket.readyState !== 1) return Promise.resolve(json({ error: "MEDIA unavailable" }, 503));
     if (this.pending) return Promise.resolve(json({ error: "MEDIA busy" }, 409));
     const id = crypto.randomUUID();
-    const timeout = command.op === "frame" ? 8e3 : command.op === "fileDownload" ? 18e4 : command.op.startsWith("upload") ? 13e3 : 22e3;
+    const timeout = command.op === "fileDownload" ? 18e4 : command.op.startsWith("upload") ? 13e3 : 22e3;
     return new Promise((resolve) => {
       const timer = setTimeout(() => this.finish(json({ error: "MEDIA response timeout" }, 504)), timeout);
-      this.pending = { id, socket, resolve, timer, op: command.op, key: command.arg, expectsImage: !!command.image, buffer: null, used: 0 };
+      this.pending = { id, socket, resolve, timer, op: command.op, key: command.arg, expectsFile: command.op === "fileDownload", buffer: null, used: 0 };
       try {
         if (chunk) {
           const frame = new Uint8Array(HEADER_BYTES + chunk.length);
@@ -811,8 +783,13 @@ var RohamHub = class {
       }
       if (!m || typeof m !== "object") return;
       if (m.type === "telemetry") {
-        if (m.data?.cluster?.nodes?.length === 4) {
-          this.telemetry = m.data.cluster;
+        const snapshot = m.data?.cluster;
+        const board = Array.isArray(snapshot?.nodes) && snapshot.nodes.find((node) => node?.role === "DATA");
+        if (board && typeof board.online === "boolean") {
+          this.telemetry = {
+            online: board.online,
+            mounted: board.online && typeof snapshot.dataSd === "boolean" ? snapshot.dataSd : null
+          };
           this.telemetryAt = Date.now();
         }
         return;
@@ -820,39 +797,37 @@ var RohamHub = class {
       if (!pending || pending.socket !== socket || m.id !== pending.id) return;
       if (m.type === "error") {
         const message2 = typeof m.error === "string" ? m.error : "";
-        const missing = pending.op === "photo" && message2 === "Photo unavailable" || pending.op === "fileDownload" && message2 === "File unavailable";
+        const missing = pending.op === "fileDownload" && message2 === "File unavailable";
         const code = missing ? 404 : message2.includes("busy") ? 409 : 502;
         this.finish(json({ error: m.error || "MEDIA failed" }, code));
         return;
       }
-      if (!pending.expectsImage) {
+      if (!pending.expectsFile) {
         if (m.type === "result") this.finish(json(m.data ?? {}));
         return;
       }
-      const file = pending.op === "fileDownload";
       if (m.type === "begin") {
-        if (pending.buffer || !Number.isInteger(m.size) || m.size < (file ? 0 : 4) || m.size > (file ? MAX_UPLOAD : MAX_PHOTO)) {
-          this.finish(json({ error: "invalid image length" }, 502));
+        if (pending.buffer || !Number.isInteger(m.size) || m.size < 0 || m.size > MAX_UPLOAD) {
+          this.finish(json({ error: "invalid file length" }, 502));
           return;
         }
         pending.buffer = new Uint8Array(m.size);
       } else if (m.type === "end") {
         if (!pending.buffer || pending.used !== pending.buffer.length) {
-          this.finish(json({ error: "incomplete image" }, 502));
+          this.finish(json({ error: "incomplete file" }, 502));
           return;
         }
-        const headers = { ...standard, "Content-Type": file ? "application/octet-stream" : "image/jpeg" };
-        if (file) headers["Content-Disposition"] = attachment(pending.key);
+        const headers = { ...standard, "Content-Type": "application/octet-stream", "Content-Disposition": attachment(pending.key) };
         this.finish(new Response(pending.buffer, { headers }));
       }
       return;
     }
-    if (!pending || pending.socket !== socket || !pending.expectsImage) return;
+    if (!pending || pending.socket !== socket || !pending.expectsFile) return;
     const bytes = new Uint8Array(message);
     if (bytes.length <= HEADER_BYTES || decoder.decode(bytes.subarray(0, HEADER_BYTES)) !== pending.id) return;
     const chunk = bytes.subarray(HEADER_BYTES);
     if (!pending.buffer || chunk.length > 2048 || pending.used + chunk.length > pending.buffer.length) {
-      this.finish(json({ error: "invalid image block" }, 502));
+      this.finish(json({ error: "invalid file block" }, 502));
       return;
     }
     pending.buffer.set(chunk, pending.used);

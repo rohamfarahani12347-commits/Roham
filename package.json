@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
+    "dev": "wrangler dev --config wrangler.jsonc",
+    "check": "node --check worker.js && wrangler deploy --config wrangler.jsonc --dry-run",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
