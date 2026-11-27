@@ -1,0 +1,12 @@
+{
+  "name": "roham-os",
+  "main": "worker.js",
+  "compatibility_date": "2026-11-24",
+  "workers_dev": true,
+  "preview_urls": false,
+  "keep_vars": true,
+  "durable_objects": {
+    "bindings": [{ "name": "ROHAM_HUB", "class_name": "RohamHub" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RohamHub"] }]
+}
