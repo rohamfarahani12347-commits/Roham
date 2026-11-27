@@ -1,0 +1,20 @@
+name = "roham-os-v4"
+main = "src/worker.js"
+compatibility_date = "2025-04-01"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
+
+[[durable_objects.bindings]]
+name = "HUB"
+class_name = "RohamHub"
+
+[[durable_objects.bindings]]
+name = "LOGIN_LIMIT"
+class_name = "LoginLimit"
+
+[[migrations]]
+tag = "roham-v4"
+new_sqlite_classes = ["RohamHub", "LoginLimit"]

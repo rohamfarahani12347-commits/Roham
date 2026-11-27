@@ -1,7 +1,12 @@
 {
-  "name": "roham-os",
-  "version": "0.1.0",
+  "name": "roham-cluster-worker",
   "private": true,
   "type": "module",
-  "devDependencies": { "wrangler": "^4.0.0" }
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.169.0"
+  }
 }
