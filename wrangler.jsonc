@@ -1,12 +1,26 @@
 {
-  "name": "roham-os",
+  "name": "roham-os-v4",
   "main": "worker.js",
-  "compatibility_date": "2026-11-24",
-  "workers_dev": true,
-  "preview_urls": false,
-  "keep_vars": true,
+  "compatibility_date": "2025-04-01",
   "durable_objects": {
-    "bindings": [{ "name": "ROHAM_HUB", "class_name": "RohamHub" }]
+    "bindings": [
+      {
+        "name": "HUB",
+        "class_name": "RohamHub"
+      },
+      {
+        "name": "LOGIN_LIMIT",
+        "class_name": "LoginLimit"
+      }
+    ]
   },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RohamHub"] }]
+  "migrations": [
+    {
+      "tag": "roham-v4",
+      "new_sqlite_classes": [
+        "RohamHub",
+        "LoginLimit"
+      ]
+    }
+  ]
 }
